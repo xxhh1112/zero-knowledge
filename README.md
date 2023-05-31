@@ -1,4 +1,4 @@
-# Zero-Knowledge Implementations: The future of Proofs
+# Zero-Knowledge : The future of Proofs
 
 
 ![Logo](https://github.com/UniversalDot/documents/blob/master/logo/universaldot-logo/rsz_jpg-02.jpg)
