@@ -20,7 +20,9 @@ struct User {
 
 fn main() {
     // Simulate Alice and Bob
-    let alice_secret_key = Scalar::random(&mut rand::thread_rng());
+    let mut rng = rand::thread_rng();
+    
+    let alice_secret_key = Scalar::random(&mut rng);
     let alice_reputation_data = ReputationData {
         positive_vouches: 10,
         negative_vouches: 2,
@@ -30,7 +32,7 @@ fn main() {
         secret_key: alice_secret_key,
     };
 
-    let bob_secret_key = Scalar::random(&mut rand::thread_rng());
+    let bob_secret_key = Scalar::random(&mut rng);
     let bob_reputation_data = ReputationData {
         positive_vouches: 8,
         negative_vouches: 1,
@@ -41,14 +43,13 @@ fn main() {
     };
 
     // Simulate proving reputation data
-    let mut rng = rand::thread_rng();
     let challenge = Scalar::random(&mut rng);
 
     // Alice generates commitment
     let commitment_a = RISTRETTO_BASEPOINT_POINT * alice.secret_key;
 
     // Alice computes response
-    let response_a = alice.secret_key + challenge * alice.reputation_data.positive_vouches;
+    let response_a = alice.secret_key + challenge * Scalar::from(alice.reputation_data.positive_vouches);
 
     // Alice sends commitment to Bob
 
@@ -56,13 +57,13 @@ fn main() {
     let commitment_b = RISTRETTO_BASEPOINT_POINT * bob.secret_key;
 
     // Bob computes response
-    let response_b = bob.secret_key + challenge * bob.reputation_data.positive_vouches;
+    let response_b = bob.secret_key + challenge * Scalar::from(bob.reputation_data.positive_vouches);
 
     // Bob sends commitment and response to Alice
 
     // Alice verifies Bob's commitment and response
     let expected_commitment_b = RISTRETTO_BASEPOINT_POINT * bob.secret_key;
-    let expected_response_b = bob.secret_key + challenge * bob.reputation_data.positive_vouches;
+    let expected_response_b = bob.secret_key + challenge * Scalar::from(bob.reputation_data.positive_vouches);
 
     if commitment_b == expected_commitment_b && response_b == expected_response_b {
         println!("Bob's reputation proof is valid.");
