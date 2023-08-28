@@ -3,7 +3,7 @@ extern crate rand;
 
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_POINT;
 use curve25519_dalek::scalar::Scalar;
-use rand::Rng;
+
 
 // Simulated reputation data
 struct ReputationData {
@@ -46,10 +46,10 @@ fn main() {
     let challenge = Scalar::random(&mut rng);
 
     // Alice generates commitment
-    let commitment_a = RISTRETTO_BASEPOINT_POINT * alice.secret_key;
+    let _commitment_a = RISTRETTO_BASEPOINT_POINT * alice.secret_key;
 
     // Alice computes response
-    let response_a = alice.secret_key + challenge * Scalar::from(alice.reputation_data.positive_vouches);
+    let _response_a = alice.secret_key + challenge * Scalar::from(alice.reputation_data.positive_vouches);
 
     // Alice sends commitment to Bob
 
